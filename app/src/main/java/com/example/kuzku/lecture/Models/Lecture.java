@@ -6,6 +6,9 @@ public class Lecture {
     private String name;
     private String content;
 
+    public Lecture() {
+    }
+
     public Lecture(String name, String content) {
         this.name = name;
         this.content = content;

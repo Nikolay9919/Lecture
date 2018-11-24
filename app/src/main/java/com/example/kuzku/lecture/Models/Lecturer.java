@@ -7,6 +7,9 @@ public class Lecturer {
     private int lectureId;
     private Lecture lecture;
 
+    public Lecturer() {
+    }
+
     public Lecturer(String FName, String LName, int lectureId) {
         this.FName = FName;
         this.LName = LName;

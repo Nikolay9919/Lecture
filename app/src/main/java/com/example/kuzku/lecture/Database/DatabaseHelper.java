@@ -5,8 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import com.example.kuzku.lecture.Models.Lecture;
 import com.example.kuzku.lecture.Models.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(Context context) {
@@ -57,5 +62,74 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(DatabaseOptions.USERS_TABLE, null, values);
         db.close(); // Closing database connection
 
+    }
+
+    public Lecture getLectures(int lecture_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURES_TABLE + " WHERE "
+                  + DatabaseOptions.LectureId + " = " + lecture_id;
+
+        Log.e("lecture", selectQuery);
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Lecture lecture = new Lecture();
+        lecture.setId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
+        lecture.setName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureName)));
+        lecture.setContent(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureContent)));
+        return lecture;
+
+    }
+
+    public List<Lecture> getAllLectures() {
+        List<Lecture> lectures = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE;
+
+        Log.e("lectures", selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst())
+            do {
+                Lecture lecture = new Lecture();
+                lecture.setId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
+                lecture.setName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureName)));
+                lecture.setContent(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureContent)));
+                lectures.add(lecture);
+            } while (cursor.moveToNext());
+        return lectures;
+
+    }
+
+    public int updateLectures(Lecture lecture) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseOptions.LectureName, lecture.getName());
+        values.put(DatabaseOptions.LectureContent, lecture.getContent());
+
+        return db.update(DatabaseOptions.LECTURES_TABLE, values, DatabaseOptions.LectureId + " = ?",
+                  new String[]{String.valueOf(lecture.getId())});
+    }
+
+    public void deleteLecture(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(DatabaseOptions.LECTURES_TABLE, DatabaseOptions.LectureId + " = ?",
+                  new String[]{String.valueOf(DatabaseOptions.LectureId)});
+    }
+
+    public void addLecture(Lecture lecture) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseOptions.LectureName, lecture.getName());
+        values.put(DatabaseOptions.LectureContent, lecture.getContent());
+        db.insert(DatabaseOptions.LECTURES_TABLE, null, values);
+        db.close();
     }
 }
