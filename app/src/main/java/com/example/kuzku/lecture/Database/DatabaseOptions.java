@@ -10,12 +10,12 @@ public class DatabaseOptions {
     public static final String LECTURERS_TABLE = "lecturers";
 
     public static final String LectureId = "_id";
-    public static final String LecturerId = "lecturersId";
+    public static final String LecturerID = "LecturerID";
     public static final String UserId = "id";
 
     public static final String LectureName = "LectureName";
     public static final String LectureContent = "LectureContent";
-    public static final String LecturerID = "LecturerID";
+
 
     public static final String LecturerFName = "LecturerFName";
     public static final String LecturerLName = "LecturerLName";
