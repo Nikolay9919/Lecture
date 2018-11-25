@@ -32,7 +32,7 @@ public class DatabaseOptions {
 
     public static final String CREATE_LECTURERS_TABLE =
               "CREATE TABLE  " + LECTURERS_TABLE + "("
-                        + LecturerID + "INTEGER PRIMARY KEY AUTOINCREMENT, "
+                        + LecturerID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + LecturerFName + " TEXT NOT NULL, "
                         + LecturerLName + " TEXT NOT NULL, "
                         + LectureId + " INTEGER, " + "FOREIGN KEY ( "

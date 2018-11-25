@@ -5,6 +5,8 @@ public class Lecture {
     private int id;
     private String name;
     private String content;
+    private int lecturerId;
+
 
     public Lecture() {
     }
@@ -36,6 +38,14 @@ public class Lecture {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getLecturerId() {
+        return lecturerId;
+    }
+
+    public void setLecturerId(int lecturerId) {
+        this.lecturerId = lecturerId;
     }
 
     @Override

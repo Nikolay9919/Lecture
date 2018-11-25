@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.SimpleCursorAdapter;
 
+import com.example.kuzku.lecture.Activities.LecturesActivity;
 import com.example.kuzku.lecture.Models.Lecture;
 import com.example.kuzku.lecture.Models.User;
 
@@ -34,14 +36,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public User queryUser(String email, String password, boolean isLecturer) {
+    public User queryUser(String studNumber, String password) {
 
         SQLiteDatabase db = this.getReadableDatabase();
         User user = null;
 
         Cursor cursor = db.query(DatabaseOptions.USERS_TABLE, new String[]{DatabaseOptions.UserId,
-                            DatabaseOptions.studNumber, DatabaseOptions.password, DatabaseOptions.isLecturer}, DatabaseOptions.studNumber + "=? and " + DatabaseOptions.password + "=?" + DatabaseOptions.isLecturer + "=?",
-                  new String[]{email, password, String.valueOf(isLecturer)}, null, null, null, "1");
+                            DatabaseOptions.studNumber, DatabaseOptions.password, DatabaseOptions.isLecturer}, DatabaseOptions.studNumber + "=? and " + DatabaseOptions.password + "=?",
+                  new String[]{studNumber, password}, null, null, null, "1");
         if (cursor != null)
             cursor.moveToFirst();
         if (cursor != null && cursor.getCount() > 0) {
@@ -81,6 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         lecture.setId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
         lecture.setName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureName)));
         lecture.setContent(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureContent)));
+        lecture.setLecturerId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LecturerID)));
         return lecture;
 
     }
@@ -100,6 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 lecture.setId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
                 lecture.setName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureName)));
                 lecture.setContent(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureContent)));
+                lecture.setLecturerId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LecturerID)));
                 lectures.add(lecture);
             } while (cursor.moveToNext());
         return lectures;
@@ -112,9 +116,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(DatabaseOptions.LectureName, lecture.getName());
         values.put(DatabaseOptions.LectureContent, lecture.getContent());
+        values.put(DatabaseOptions.LecturerID, lecture.getLecturerId());
 
         return db.update(DatabaseOptions.LECTURES_TABLE, values, DatabaseOptions.LectureId + " = ?",
                   new String[]{String.valueOf(lecture.getId())});
+    }
+
+    public Cursor getLecturesCursor() {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select * from " + DatabaseOptions.LECTURES_TABLE, null);
+
+
+        return cursor;
     }
 
     public void deleteLecture(int id) {
@@ -129,7 +143,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(DatabaseOptions.LectureName, lecture.getName());
         values.put(DatabaseOptions.LectureContent, lecture.getContent());
+        values.put(DatabaseOptions.LecturerID, lecture.getId());
         db.insert(DatabaseOptions.LECTURES_TABLE, null, values);
         db.close();
     }
+
+
 }
