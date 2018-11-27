@@ -46,5 +46,8 @@ public class DatabaseOptions {
                         + password + " VARCHAR(25) NOT NULL , "
                         + isLecturer + " BOOLEAN " + ");";
 
+    public static final String INSERT = "INSERT INTO " + LECTURERS_TABLE + " ( " + LecturerFName + " , " +
+              LecturerLName + ") VALUES ('NIKOLAY','KUZICHEV');";
+
 
 }

@@ -11,6 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.RegistrationActivity"></activity>
         <activity android:name=".Activities.LecturesActivity"></activity>
+        <activity android:name=".Activities.AddLectureActivity"></activity>
         <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -26,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseOptions.CREATE_USERS_TABLE);
         db.execSQL(DatabaseOptions.CREATE_LECTURE_TABLE);
         db.execSQL(DatabaseOptions.CREATE_LECTURERS_TABLE);
+        db.execSQL(DatabaseOptions.INSERT);
     }
 
     @Override
@@ -148,5 +149,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    public List<String> getLecturersName() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<String> lecturers = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst())
+            do {
+                lecturers.add(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerFName)) + " "
+                          + cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerLName)));
+
+
+            } while (cursor.moveToNext());
+
+        return lecturers;
+    }
 
 }

@@ -45,6 +45,11 @@ public class LecturesActivity extends AppCompatActivity {
 
     }
 
+    public void add(View v) {
+        Intent intent = new Intent(this, AddLectureActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
