@@ -28,16 +28,20 @@ public class DatabaseOptions {
               "CREATE TABLE  " + LECTURES_TABLE + "("
                         + LectureId + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + LectureName + " TEXT NOT NULL,"
-                        + LectureContent + " TEXT NOT NULL " + ");";
+                        + LectureContent + " TEXT NOT NULL , "
+                        + LecturerID + " INTEGER, " + " FOREIGN KEY ( "
+                        + LecturerID + " ) REFERENCES " + LECTURERS_TABLE + " ( "
+                        + LecturerID + " ) "
+                        + ");";
 
     public static final String CREATE_LECTURERS_TABLE =
-              "CREATE TABLE  " + LECTURERS_TABLE + "("
+              "CREATE TABLE  " + LECTURERS_TABLE + " ( "
                         + LecturerID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + LecturerFName + " TEXT NOT NULL, "
                         + LecturerLName + " TEXT NOT NULL, "
                         + LectureId + " INTEGER, " + "FOREIGN KEY ( "
-                        + LectureId + " ) REFERENCES " + LECTURES_TABLE + "( "
-                        + LectureId + "));";
+                        + LectureId + " ) REFERENCES " + LECTURES_TABLE + " ( "
+                        + LectureId + " ));";
 
     public static final String CREATE_USERS_TABLE =
               "CREATE TABLE  " + USERS_TABLE + " ( "

@@ -10,6 +10,22 @@ public class Lecturer {
     public Lecturer() {
     }
 
+    public int getLectureId() {
+        return lectureId;
+    }
+
+    public void setLectureId(int lectureId) {
+        this.lectureId = lectureId;
+    }
+
+    public Lecture getLecture() {
+        return lecture;
+    }
+
+    public void setLecture(Lecture lecture) {
+        this.lecture = lecture;
+    }
+
     public Lecturer(String FName, String LName, int lectureId) {
         this.FName = FName;
         this.LName = LName;

@@ -6,10 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.SimpleCursorAdapter;
 
-import com.example.kuzku.lecture.Activities.LecturesActivity;
 import com.example.kuzku.lecture.Models.Lecture;
+import com.example.kuzku.lecture.Models.Lecturer;
 import com.example.kuzku.lecture.Models.User;
 
 import java.util.ArrayList;
@@ -26,7 +25,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseOptions.CREATE_USERS_TABLE);
         db.execSQL(DatabaseOptions.CREATE_LECTURE_TABLE);
         db.execSQL(DatabaseOptions.CREATE_LECTURERS_TABLE);
-        db.execSQL(DatabaseOptions.INSERT);
     }
 
     @Override
@@ -91,7 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<Lecture> getAllLectures() {
         List<Lecture> lectures = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE;
+        String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURES_TABLE;
 
         Log.e("lectures", selectQuery);
 
@@ -106,6 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 lecture.setContent(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureContent)));
                 lecture.setLecturerId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LecturerID)));
                 lectures.add(lecture);
+
             } while (cursor.moveToNext());
         return lectures;
 
@@ -123,13 +122,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                   new String[]{String.valueOf(lecture.getId())});
     }
 
-    public Cursor getLecturesCursor() {
+    public ArrayList<String> getLectures() {
+        ArrayList<String> lectures = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("select * from " + DatabaseOptions.LECTURES_TABLE, null);
+        Cursor cursorLectures = db.rawQuery("select * from " + DatabaseOptions.LECTURES_TABLE, null);
+
+        if (cursorLectures.moveToFirst())
+            do {
+
+                lectures.add(cursorLectures.getString(cursorLectures.getColumnIndex(DatabaseOptions.LectureName)) + "        "
+                          + getLecturerName(cursorLectures.getInt(cursorLectures.getColumnIndex(DatabaseOptions.LecturerID)) + 1));
 
 
-        return cursor;
+            } while (cursorLectures.moveToNext());
+        return lectures;
+
+
     }
 
     public void deleteLecture(int id) {
@@ -149,22 +158,78 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-
-    public List<String> getLecturersName() {
-        SQLiteDatabase db = this.getReadableDatabase();
+    public List<String> getAllLecturers() {
         List<String> lecturers = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE;
-        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        Log.e("lecturers", selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE, null);
 
         if (cursor.moveToFirst())
             do {
+
                 lecturers.add(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerFName)) + " "
                           + cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerLName)));
 
 
             } while (cursor.moveToNext());
-
         return lecturers;
+
     }
 
+
+    public void addLecturer(Lecturer lecturer) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(DatabaseOptions.LecturerFName, lecturer.getFName());
+        cv.put(DatabaseOptions.LecturerLName, lecturer.getLName());
+        cv.put(DatabaseOptions.LectureId, lecturer.getLectureId());
+        db.insert(DatabaseOptions.LECTURERS_TABLE, null, cv);
+        Log.d("lecturer", cv.toString());
+        db.close();
+    }
+
+    public Lecturer getLecturer(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE + " WHERE "
+                  + DatabaseOptions.LecturerID + " = " + id;
+
+        Log.e("lecture", selectQuery);
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Lecturer lecturer = new Lecturer();
+        lecturer.setId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
+        lecturer.setFName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerFName)));
+        lecturer.setLName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerLName)));
+        lecturer.setLectureId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
+        return lecturer;
+    }
+
+    public String getLecturerName(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String name;
+
+        String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE + " WHERE "
+                  + DatabaseOptions.LecturerID + " = " + id;
+
+        Log.e("lecturer", selectQuery);
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        name = cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerFName)) + " "
+                  + cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerLName));
+
+        return name;
+    }
 }

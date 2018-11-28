@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,10 +21,10 @@
         app:layout_constraintVertical_bias="0.0">
 
         <EditText
-            android:id="@+id/lectureNameInput"
+            android:id="@+id/lecturerFNameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name" />
+            android:hint="First Name" />
 
     </LinearLayout>
 
@@ -45,46 +44,24 @@
         app:layout_constraintVertical_bias="0.0">
 
         <EditText
-            android:id="@+id/contentInput"
+            android:id="@+id/lecturerLNameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Content" />
+            android:hint="Last Name" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="312dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
-        app:layout_constraintVertical_bias="0.0">
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/saveButton"
+            android:id="@+id/addLecturer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add" />

@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Lecture</string>
+    <string name="item1">Add Lecture</string>
+    <string name="item2">Add Lecturer</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Nikolay Kuzichev</string>
+    <string name="nav_header_subtitle">nikolaykuzichev99@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
 </resources>
