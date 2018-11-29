@@ -50,8 +50,8 @@ public class DatabaseOptions {
                         + password + " VARCHAR(25) NOT NULL , "
                         + isLecturer + " BOOLEAN " + ");";
 
-    public static final String INSERT = "INSERT INTO " + LECTURERS_TABLE + " ( " + LecturerFName + " , " +
-              LecturerLName + ") VALUES ('NIKOLAY','KUZICHEV');";
+    public static final String INSERT = "INSERT INTO " + USERS_TABLE + " ( " + studNumber + " , " +
+              password + " , " + isLecturer + ") VALUES ('1234','qwerty', 1);";
 
 
 }

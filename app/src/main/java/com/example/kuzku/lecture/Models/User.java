@@ -25,6 +25,9 @@ public class User {
         return studNumber;
     }
 
+    public User() {
+    }
+
     public void setStudNumber(String studNumber) {
         this.studNumber = studNumber;
     }
@@ -41,7 +44,7 @@ public class User {
         return isLecturer;
     }
 
-    public void setLecturer(boolean lecturer) {
+    public void setIsLecturer(boolean lecturer) {
         isLecturer = lecturer;
     }
 

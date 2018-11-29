@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Enter your student/lecturer number"
-            android:inputType="text" />
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="password"
-            android:inputType="text" />
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <LinearLayout

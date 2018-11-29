@@ -25,6 +25,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseOptions.CREATE_USERS_TABLE);
         db.execSQL(DatabaseOptions.CREATE_LECTURE_TABLE);
         db.execSQL(DatabaseOptions.CREATE_LECTURERS_TABLE);
+        db.execSQL(DatabaseOptions.INSERT);
+
     }
 
     @Override
