@@ -85,6 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         lecture.setName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureName)));
         lecture.setContent(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureContent)));
         lecture.setLecturerId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LecturerID)));
+
         return lecture;
 
     }
@@ -207,7 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         Lecturer lecturer = new Lecturer();
-        lecturer.setId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
+        lecturer.setId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LecturerID)));
         lecturer.setFName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerFName)));
         lecturer.setLName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerLName)));
         lecturer.setLectureId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
