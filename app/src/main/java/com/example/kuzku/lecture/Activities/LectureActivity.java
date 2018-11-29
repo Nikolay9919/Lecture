@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -23,22 +24,12 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
     TextView contentLectureView;
     TextView nameLecturerView;
     DatabaseHelper databaseHelper;
-    Bundle extras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        databaseHelper = new DatabaseHelper(getApplicationContext());
-        extras = getIntent().getExtras();
-        nameLectureView = (TextView) findViewById(R.id.name_lecture);
-        contentLectureView = (TextView) findViewById(R.id.content_lecture);
-        nameLecturerView = (TextView) findViewById(R.id.lecturer_name);
-        Lecture lecture = databaseHelper.getLectures((int) extras.getLong("id"));
-        Lecturer lecturer = databaseHelper.getLecturer(lecture.getLecturerId());
-        nameLectureView.setText(lecture.getName() + " ");
-        nameLecturerView.setText(lecturer.getFName() + " " + lecturer.getLName());
-        contentLectureView.setText(lecture.getContent() + " ");
+        setContentView(R.layout.activity_lecture);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -47,17 +38,29 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
                   this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
+        savedInstanceState = getIntent().getExtras();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        databaseHelper = new DatabaseHelper(getApplicationContext());
+        Lecture lecture = databaseHelper.getLectures(savedInstanceState.getInt("id"));
+        Lecturer lecturer = databaseHelper.getLecturer(lecture.getLecturerId());
+        Log.d("lecturerId", String.valueOf(lecture.getLecturerId()));
 
+
+        nameLectureView = (TextView) findViewById(R.id.name_lecture);
+        contentLectureView = (TextView) findViewById(R.id.content_lecture);
+        nameLecturerView = (TextView) findViewById(R.id.lecturer_name);
+        Log.d("extras", String.valueOf(savedInstanceState.getInt("id")));
+
+        nameLectureView.setText("Name:\n" + lecture.getName());
+        nameLecturerView.setText("Lecturer:\n" + lecturer.getFName() + " " + lecturer.getLName());
+        contentLectureView.setText(lecture.getContent() + " ");
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
 
 
     }

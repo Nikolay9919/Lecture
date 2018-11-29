@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,6 +59,17 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                lecturerId = position + 1;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +79,8 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
                     Lecture lecture = new Lecture();
                     lecture.setName(nameBox.getText().toString());
                     lecture.setContent(contentBox.getText().toString());
-                    lecture.setLecturerId(spinner.getSelectedItemPosition());
+                    lecture.setLecturerId(lecturerId);
+                    Log.d("lectureAdd", String.valueOf(spinner.getSelectedItemPosition()));
                     databaseHelper.addLecture(lecture);
                     Snackbar.make(view, "Added", Snackbar.LENGTH_LONG)
                               .setAction("Action", null).show();
@@ -89,17 +102,6 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                lecturerId = position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
 
     }

@@ -76,18 +76,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.e("lecture", selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor != null)
+        Lecture lecture = new Lecture();
+        if (cursor != null) {
             cursor.moveToFirst();
 
-        Lecture lecture = new Lecture();
-        lecture.setId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
-        lecture.setName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureName)));
-        lecture.setContent(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureContent)));
-        lecture.setLecturerId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LecturerID)));
 
+            lecture.setId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
+            lecture.setName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureName)));
+            lecture.setContent(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LectureContent)));
+            lecture.setLecturerId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LecturerID)));
+
+        }
         return lecture;
-
     }
 
     public List<Lecture> getAllLectures() {
@@ -131,7 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursorLectures = db.rawQuery("select * from " + DatabaseOptions.LECTURES_TABLE, null);
 
-        if (cursorLectures.moveToFirst())
+        if (cursorLectures != null && cursorLectures.moveToFirst())
             do {
 
                 lectures.add(cursorLectures.getString(cursorLectures.getColumnIndex(DatabaseOptions.LectureName)) + "        "
@@ -156,7 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(DatabaseOptions.LectureName, lecture.getName());
         values.put(DatabaseOptions.LectureContent, lecture.getContent());
-        values.put(DatabaseOptions.LecturerID, lecture.getId());
+        values.put(DatabaseOptions.LecturerID, lecture.getLecturerId());
         db.insert(DatabaseOptions.LECTURES_TABLE, null, values);
         db.close();
     }
@@ -200,25 +200,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE + " WHERE "
                   + DatabaseOptions.LecturerID + " = " + id;
 
-        Log.e("lecture", selectQuery);
+        Log.e("lecturer", selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor != null)
-            cursor.moveToFirst();
-
         Lecturer lecturer = new Lecturer();
-        lecturer.setId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LecturerID)));
-        lecturer.setFName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerFName)));
-        lecturer.setLName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerLName)));
-        lecturer.setLectureId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
+        if (cursor != null && cursor.moveToFirst()) {
+
+            lecturer = new Lecturer();
+            lecturer.setId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LecturerID)));
+            lecturer.setFName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerFName)));
+            lecturer.setLName(cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerLName)));
+            lecturer.setLectureId(cursor.getInt(cursor.getColumnIndex(DatabaseOptions.LectureId)));
+
+        }
         return lecturer;
     }
 
     public String getLecturerName(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String name;
+        String name = "";
 
         String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE + " WHERE "
                   + DatabaseOptions.LecturerID + " = " + id;
@@ -227,12 +228,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        if (cursor != null)
-            cursor.moveToFirst();
+        if (cursor != null && cursor.moveToFirst()) {
 
-        name = cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerFName)) + " "
-                  + cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerLName));
+            name = cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerFName)) + " "
+                      + cursor.getString(cursor.getColumnIndex(DatabaseOptions.LecturerLName));
 
+
+        }
         return name;
     }
 }

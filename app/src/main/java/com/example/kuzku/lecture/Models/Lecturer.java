@@ -63,7 +63,7 @@ public class Lecturer {
 
     @Override
     public String toString() {
-        return "Lecturer{" +
+        return "Lecturer{" + id +
                   "FName='" + FName + '\'' +
                   ", LName='" + LName + '\'' +
                   ", lectureId=" + lectureId +
