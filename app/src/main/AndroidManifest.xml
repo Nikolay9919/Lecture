@@ -14,10 +14,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.AddLecturerActivity"
+            android:label="@string/add_lecturer"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.RegistrationActivity" />
         <activity
             android:name=".Activities.AddLectureActivity"
+            android:label="@string/add_lecture"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.MainActivity">
             <intent-filter>

@@ -27,9 +27,14 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        savedInstanceState = getIntent().getExtras();
+        databaseHelper = new DatabaseHelper(getApplicationContext());
+
+        lecture = databaseHelper.getLectures(savedInstanceState.getInt("id"));
 
         setContentView(R.layout.activity_lecture);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(lecture.getName());
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -37,11 +42,10 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
                   this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        savedInstanceState = getIntent().getExtras();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        databaseHelper = new DatabaseHelper(getApplicationContext());
-        lecture = databaseHelper.getLectures(savedInstanceState.getInt("id"));
+
 
     }
 

@@ -136,6 +136,10 @@ public class Main2Activity extends AppCompatActivity
             intent.putExtra("id", userId);
             intent.putExtra("isLecturer", isLecturer);
             startActivity(intent);
+        } else if (id == R.id.registration_button) {
+            Intent intent = new Intent(this, RegistrationActivity.class);
+            intent.putExtra("isLecturer", isLecturer);
+            startActivity(intent);
         }
 
 

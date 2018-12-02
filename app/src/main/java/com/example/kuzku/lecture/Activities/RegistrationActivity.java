@@ -21,18 +21,27 @@ public class RegistrationActivity extends AppCompatActivity {
     private CheckBox isLecturerCheck;
     private FloatingActionButton registrationButton;
     private DatabaseHelper dbHelper;
+    int isLecturer;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+        final Intent intent = getIntent();
+        isLecturer = intent.getIntExtra("isLecturer", 0);
 
         editStudNumber = findViewById(R.id.stud_number_input);
         editPassword = findViewById(R.id.password_input);
         isLecturerCheck = findViewById(R.id.is_Lecturer);
         registrationButton = findViewById(R.id.registration_button);
-        isLecturerCheck.setVisibility(View.INVISIBLE);
+
+
+        if (isLecturer == 1)
+            isLecturerCheck.setVisibility(View.VISIBLE);
+        else
+            isLecturerCheck.setVisibility(View.INVISIBLE);
         dbHelper = new DatabaseHelper(this);
         registrationButton.setOnClickListener(new View.OnClickListener() {
             @Override

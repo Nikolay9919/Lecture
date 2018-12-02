@@ -2,7 +2,8 @@
     <string name="app_name">Lecture</string>
     <string name="item1">Add Lecture</string>
     <string name="item2">Add Lecturer</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main2">Lectures</string>
+    <string name="add_lecture">Add Lecture</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Nikolay Kuzichev</string>
@@ -23,5 +24,6 @@
     <string name="student_number">Student number</string>
     <string name="is_lecturer">Is Lecturer?</string>
     <string name="registration">Registration</string>
+    <string name="add_lecturer">add_lecturer</string>
 
 </resources>
