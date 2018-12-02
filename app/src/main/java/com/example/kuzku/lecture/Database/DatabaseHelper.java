@@ -223,7 +223,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<String> lecturers = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE;
 
-        Log.e("lecturers", selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE, null);
@@ -248,7 +247,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(DatabaseOptions.LecturerLName, lecturer.getLName());
         cv.put(DatabaseOptions.LectureId, lecturer.getLectureId());
         db.insert(DatabaseOptions.LECTURERS_TABLE, null, cv);
-        Log.d("lecturer", cv.toString());
         db.close();
     }
 
@@ -258,7 +256,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE + " WHERE "
                   + DatabaseOptions.LecturerID + " = " + id;
 
-        Log.e("lecturer", selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         Lecturer lecturer = new Lecturer();
@@ -282,7 +279,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + DatabaseOptions.LECTURERS_TABLE + " WHERE "
                   + DatabaseOptions.LecturerID + " = " + id;
 
-        Log.e("lecturer", selectQuery);
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 

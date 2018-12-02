@@ -120,7 +120,7 @@ public class EditUserActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-       int id = item.getItemId();
+        int id = item.getItemId();
 
         if (id == R.id.add_lecture) {
             Intent intent = new Intent(this, AddLectureActivity.class);

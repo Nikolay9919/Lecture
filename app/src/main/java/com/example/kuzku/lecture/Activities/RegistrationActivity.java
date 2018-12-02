@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -35,7 +34,6 @@ public class RegistrationActivity extends AppCompatActivity {
         registrationButton = findViewById(R.id.registration_button);
         isLecturerCheck.setVisibility(View.INVISIBLE);
         dbHelper = new DatabaseHelper(this);
-        Log.d("users", String.valueOf(dbHelper.getUsers()));
         registrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

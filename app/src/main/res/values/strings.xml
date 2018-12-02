@@ -22,5 +22,6 @@
     <string name="sign_in">Sign in</string>
     <string name="student_number">Student number</string>
     <string name="is_lecturer">Is Lecturer?</string>
+    <string name="registration">Registration</string>
 
 </resources>

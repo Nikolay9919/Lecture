@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,7 +79,7 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
                     lecture.setName(nameBox.getText().toString());
                     lecture.setContent(contentBox.getText().toString());
                     lecture.setLecturerId(lecturerId);
-                    Log.d("lectureAdd", String.valueOf(spinner.getSelectedItemPosition()));
+
                     databaseHelper.addLecture(lecture);
                     Snackbar.make(view, "Added", Snackbar.LENGTH_LONG)
                               .setAction("Action", null).show();

@@ -135,7 +135,6 @@ public class Main2Activity extends AppCompatActivity
             Intent intent = new Intent(this, EditUserActivity.class);
             intent.putExtra("id", userId);
             intent.putExtra("isLecturer", isLecturer);
-            Log.d("idinmain2activity", String.valueOf(userId));
             startActivity(intent);
         }
 

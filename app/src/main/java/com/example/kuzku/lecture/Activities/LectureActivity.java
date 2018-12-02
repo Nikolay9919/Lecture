@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -51,7 +50,6 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
         super.onResume();
 
         Lecturer lecturer = databaseHelper.getLecturer(lecture.getLecturerId());
-        Log.d("lecturerId", String.valueOf(lecture.getLecturerId()));
 
 
         contentLectureView = (TextView) findViewById(R.id.content_lecture);
