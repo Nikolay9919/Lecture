@@ -27,14 +27,12 @@ import com.example.kuzku.lecture.R;
 public class AddLectureActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     EditText nameBox;
     EditText contentBox;
-
     String name;
     String content;
     int lecturerId;
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
     Spinner spinner;
-
     ArrayAdapter<String> adapter;
 
     @Override

@@ -2,10 +2,10 @@ package com.example.kuzku.lecture.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,7 +19,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText editStudNumber;
     private EditText editPassword;
     private CheckBox isLecturerCheck;
-    private Button registrationButton;
+    private FloatingActionButton registrationButton;
     private DatabaseHelper dbHelper;
 
     @Override
@@ -56,7 +56,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         dbHelper.close();
 
-        Intent intent = new Intent(this, Main2Activity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }

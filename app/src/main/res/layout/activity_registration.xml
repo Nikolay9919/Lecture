@@ -2,7 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -20,8 +21,8 @@
             android:id="@+id/stud_number_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:hint="@string/student_number" />
+            android:hint="@string/student_number"
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,8 +45,8 @@
             android:id="@+id/password_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="@string/password" />
+            android:hint="@string/password"
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <LinearLayout
@@ -61,27 +62,22 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <CheckBox
+            android:id="@+id/is_Lecturer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/is_lecturer"
-            android:id="@+id/is_Lecturer" />
+            android:text="@string/is_lecturer" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/registration_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:srcCompat="@android:drawable/ic_input_add" />
 
-        <Button
-            android:id="@+id/registration_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/registration" />
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
