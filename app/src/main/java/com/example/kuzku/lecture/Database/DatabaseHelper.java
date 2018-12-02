@@ -129,18 +129,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public int updateLectures(Lecture lecture) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseOptions.LectureName, lecture.getName());
-        values.put(DatabaseOptions.LectureContent, lecture.getContent());
-        values.put(DatabaseOptions.LecturerID, lecture.getLecturerId());
-
-        return db.update(DatabaseOptions.LECTURES_TABLE, values, DatabaseOptions.LectureId + " = ?",
-                  new String[]{String.valueOf(lecture.getId())});
-
-    }
 
     public ArrayList<String> getLectures() {
         ArrayList<String> lectures = new ArrayList<>();
@@ -219,11 +207,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void deleteLecture(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(DatabaseOptions.LECTURES_TABLE, DatabaseOptions.LectureId + " = ?",
-                  new String[]{String.valueOf(DatabaseOptions.LectureId)});
-    }
 
     public void addLecture(Lecture lecture) {
         SQLiteDatabase db = this.getWritableDatabase();

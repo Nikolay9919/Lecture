@@ -11,10 +11,6 @@ public class Lecture {
     public Lecture() {
     }
 
-    public Lecture(String name, String content) {
-        this.name = name;
-        this.content = content;
-    }
 
     public int getId() {
         return id;

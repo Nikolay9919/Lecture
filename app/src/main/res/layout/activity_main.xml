@@ -23,7 +23,7 @@
             android:id="@+id/stud_number_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Enter your student/lecturer number"
+            android:hint="@string/enter_your_student_lecturer_number"
             android:inputType="number" />
     </LinearLayout>
 
@@ -47,7 +47,7 @@
             android:id="@+id/password_input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
     </LinearLayout>
 
@@ -71,14 +71,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Sign in" />
+            android:text="@string/sign_in" />
 
         <Button
             android:id="@+id/registration_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Registration" />
+            android:text="@string/registration" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

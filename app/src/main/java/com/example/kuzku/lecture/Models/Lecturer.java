@@ -26,17 +26,6 @@ public class Lecturer {
         this.lecture = lecture;
     }
 
-    public Lecturer(String FName, String LName, int lectureId) {
-        this.FName = FName;
-        this.LName = LName;
-        this.lectureId = lectureId;
-    }
-
-    public Lecturer(String FName, String LName) {
-        this.FName = FName;
-        this.LName = LName;
-    }
-
     public int getId() {
         return id;
     }
