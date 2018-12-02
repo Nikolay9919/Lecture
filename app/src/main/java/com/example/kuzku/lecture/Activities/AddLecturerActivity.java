@@ -138,10 +138,9 @@ public class AddLecturerActivity extends AppCompatActivity implements Navigation
         if (id == R.id.add_lecture) {
             Intent intent = new Intent(this, AddLectureActivity.class);
             startActivity(intent);
-        } else if (id == R.id.add_lecturer) {
-            Intent intent = new Intent(this, AddLecturerActivity.class);
+        } else if (id == R.id.update_user) {
+            Intent intent = new Intent(this, EditUserActivity.class);
             startActivity(intent);
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

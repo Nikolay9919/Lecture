@@ -2,9 +2,7 @@ package com.example.kuzku.lecture.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.kuzku.lecture.Database.DatabaseHelper;
 import com.example.kuzku.lecture.R;
@@ -25,7 +24,9 @@ public class Main2Activity extends AppCompatActivity
           implements NavigationView.OnNavigationItemSelectedListener {
     ListView lectureList;
     DatabaseHelper databaseHelper;
+    int userId;
 
+    int isLecturer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,9 @@ public class Main2Activity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        final Intent intent = getIntent();
+        userId = intent.getIntExtra("id", userId);
+        isLecturer = intent.getIntExtra("isLecturer", isLecturer);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -113,16 +116,33 @@ public class Main2Activity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         if (id == R.id.add_lecture) {
-            Intent intent = new Intent(this, AddLectureActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.add_lecturer) {
-            Intent intent = new Intent(this, AddLecturerActivity.class);
-            startActivity(intent);
+            if (isLecturer == 1) {
+                Intent intent = new Intent(this, AddLectureActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(Main2Activity.this, "You have no permission", Toast.LENGTH_SHORT);
+            }
 
+        } else if (id == R.id.add_lecturer) {
+            if (isLecturer == 1) {
+                Intent intent = new Intent(this, AddLecturerActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(Main2Activity.this, "You have no permission", Toast.LENGTH_SHORT);
+            }
+        } else if (id == R.id.update_user) {
+
+            Intent intent = new Intent(this, EditUserActivity.class);
+            intent.putExtra("id", userId);
+            intent.putExtra("isLecturer", isLecturer);
+            Log.d("idinmain2activity", String.valueOf(userId));
+            startActivity(intent);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

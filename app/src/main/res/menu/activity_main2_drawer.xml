@@ -11,6 +11,9 @@
             android:id="@+id/add_lecturer"
             android:title="Add Lecturer" />
 
+        <item
+            android:id="@+id/update_user"
+            android:title="Update User" />
     </group>
 
 

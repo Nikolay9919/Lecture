@@ -163,8 +163,8 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.add_lecture) {
-            Intent intent = new Intent(this, AddLectureActivity.class);
+        if (id == R.id.update_user) {
+            Intent intent = new Intent(this, EditUserActivity.class);
             startActivity(intent);
         } else if (id == R.id.add_lecturer) {
             Intent intent = new Intent(this, AddLecturerActivity.class);

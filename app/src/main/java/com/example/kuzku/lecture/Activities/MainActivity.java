@@ -44,11 +44,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!emptyValidation()) {
                     User user = databaseHelper.queryUser(editStudNumber.getText().toString(), editPassword.getText().toString());
+
                     if (user != null) {
-                        Bundle mBundle = new Bundle();
-                        mBundle.putString("user", String.valueOf(user.isLecturer()));
+
+
                         Intent intent = new Intent(MainActivity.this, Main2Activity.class);
-                        intent.putExtras(mBundle);
+                        intent.putExtra("isLecturer", databaseHelper.getIsLecturer(Integer.parseInt(editStudNumber.getText().toString())));
+                        intent.putExtra("id", databaseHelper.getUserId(Integer.parseInt(editStudNumber.getText().toString())));
                         startActivity(intent);
                         Toast.makeText(MainActivity.this, "Welcome " + user.getStudNumber(), Toast.LENGTH_SHORT).show();
                     } else {

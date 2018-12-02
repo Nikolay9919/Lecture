@@ -40,7 +40,7 @@ public class User {
         this.password = password;
     }
 
-    public boolean isLecturer() {
+    public boolean getIsLecturer() {
         return isLecturer;
     }
 

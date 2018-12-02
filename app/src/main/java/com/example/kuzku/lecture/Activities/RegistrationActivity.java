@@ -1,8 +1,10 @@
 package com.example.kuzku.lecture.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,29 +21,46 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText editPassword;
     private CheckBox isLecturerCheck;
     private Button registrationButton;
+    private DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+
         editStudNumber = findViewById(R.id.stud_number_input);
         editPassword = findViewById(R.id.password_input);
         isLecturerCheck = findViewById(R.id.is_Lecturer);
         registrationButton = findViewById(R.id.registration_button);
-
-        final DatabaseHelper dbHelper = new DatabaseHelper(this);
-
+        isLecturerCheck.setVisibility(View.INVISIBLE);
+        dbHelper = new DatabaseHelper(this);
+        Log.d("users", String.valueOf(dbHelper.getUsers()));
         registrationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!emptyValidation())
-                    dbHelper.addUser(new User(editStudNumber.getText().toString(), editPassword.getText().toString(), isLecturerCheck.isChecked()));
-                Toast.makeText(RegistrationActivity.this, "Added User", Toast.LENGTH_SHORT).show();
-                editPassword.setText("");
-                editStudNumber.setText("");
+                if (!emptyValidation()) {
+                    dbHelper.addUser(new User(editStudNumber.getText().toString(), editPassword.getText().toString(), false));
+                    Toast.makeText(RegistrationActivity.this, "Added User", Toast.LENGTH_SHORT).show();
+                    editPassword.setText("");
+                    editStudNumber.setText("");
+                    goHome();
+                } else if (!emptyValidation()) {
+                    Toast.makeText(RegistrationActivity.this, "Empty fields", Toast.LENGTH_SHORT);
+                } else {
+                    Toast.makeText(RegistrationActivity.this, "Error", Toast.LENGTH_SHORT);
+                }
             }
         });
+    }
+
+    private void goHome() {
+
+        dbHelper.close();
+
+        Intent intent = new Intent(this, Main2Activity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
     }
 
     private boolean emptyValidation() {
@@ -51,4 +70,5 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         }
     }
+
 }

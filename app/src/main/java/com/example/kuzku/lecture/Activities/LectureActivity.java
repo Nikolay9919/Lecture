@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,9 +21,8 @@ import com.example.kuzku.lecture.R;
 
 public class LectureActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView nameLectureView;
     TextView contentLectureView;
-    TextView nameLecturerView;
+    Lecture lecture;
     DatabaseHelper databaseHelper;
 
     @Override
@@ -42,19 +42,7 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         databaseHelper = new DatabaseHelper(getApplicationContext());
-        Lecture lecture = databaseHelper.getLectures(savedInstanceState.getInt("id"));
-        Lecturer lecturer = databaseHelper.getLecturer(lecture.getLecturerId());
-        Log.d("lecturerId", String.valueOf(lecture.getLecturerId()));
-
-
-        nameLectureView = (TextView) findViewById(R.id.name_lecture);
-        contentLectureView = (TextView) findViewById(R.id.content_lecture);
-        nameLecturerView = (TextView) findViewById(R.id.lecturer_name);
-        Log.d("extras", String.valueOf(savedInstanceState.getInt("id")));
-
-        nameLectureView.setText("Name:\n" + lecture.getName());
-        nameLecturerView.setText("Lecturer:\n" + lecturer.getFName() + " " + lecturer.getLName());
-        contentLectureView.setText(lecture.getContent() + " ");
+        lecture = databaseHelper.getLectures(savedInstanceState.getInt("id"));
 
     }
 
@@ -62,6 +50,14 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
     public void onResume() {
         super.onResume();
 
+        Lecturer lecturer = databaseHelper.getLecturer(lecture.getLecturerId());
+        Log.d("lecturerId", String.valueOf(lecture.getLecturerId()));
+
+
+        contentLectureView = (TextView) findViewById(R.id.content_lecture);
+        contentLectureView.setMovementMethod(new ScrollingMovementMethod());
+        contentLectureView.setText(lecture.getName() + " \n " + lecturer.getFName() + " " + lecturer.getLName()
+                  + " \n " + lecture.getContent());
 
     }
 
@@ -110,7 +106,11 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
             Intent intent = new Intent(this, AddLecturerActivity.class);
             startActivity(intent);
 
+        } else if (id == R.id.update_user) {
+            Intent intent = new Intent(this, EditUserActivity.class);
+            startActivity(intent);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
