@@ -21,14 +21,12 @@ import com.example.kuzku.lecture.Database.DatabaseHelper;
 import com.example.kuzku.lecture.Models.Lecturer;
 import com.example.kuzku.lecture.R;
 
-public class AddLecturerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AddLecturerActivity extends AppCompatActivity implements
+          NavigationView.OnNavigationItemSelectedListener {
     EditText fNameBox;
     EditText lNameBox;
-
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
-
-    int lecturerId;
     int isLecturer;
 
     @Override
@@ -36,16 +34,16 @@ public class AddLecturerActivity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lecturer);
 
-        fNameBox = (EditText) findViewById(R.id.lecturerFNameInput);
-        lNameBox = (EditText) findViewById(R.id.lecturerLNameInput);
+        fNameBox = findViewById(R.id.lecturerFNameInput);
+        lNameBox = findViewById(R.id.lecturerLNameInput);
         final Intent intent = getIntent();
         isLecturer = intent.getIntExtra("isLecturer", isLecturer);
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getWritableDatabase();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,13 +66,13 @@ public class AddLecturerActivity extends AppCompatActivity implements Navigation
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                   this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -91,16 +89,12 @@ public class AddLecturerActivity extends AppCompatActivity implements Navigation
     }
 
     private boolean emptyValidation() {
-        if (TextUtils.isEmpty(fNameBox.getText().toString()) || TextUtils.isEmpty(lNameBox.getText().toString())) {
-            return true;
-        } else {
-            return false;
-        }
+        return TextUtils.isEmpty(fNameBox.getText().toString()) || TextUtils.isEmpty(lNameBox.getText().toString());
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -142,7 +136,7 @@ public class AddLecturerActivity extends AppCompatActivity implements Navigation
             startActivity(intent);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

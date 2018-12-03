@@ -2,6 +2,7 @@ package com.example.kuzku.lecture.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -37,24 +38,24 @@ public class EditUserActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_user);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
         final Intent intent = getIntent();
         isLecturer = intent.getIntExtra("isLecturer", isLecturer);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                   this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        studNumber = (EditText) findViewById(R.id.edit_stud_number);
-        password = (EditText) findViewById(R.id.edit_password);
-        checkBox = (CheckBox) findViewById(R.id.is_Lecturer);
+        fab = findViewById(R.id.fab);
+        studNumber = findViewById(R.id.edit_stud_number);
+        password = findViewById(R.id.edit_password);
+        checkBox = findViewById(R.id.is_Lecturer);
         databaseHelper = new DatabaseHelper(getApplicationContext());
         if (isLecturer == 0) {
             checkBox.setVisibility(View.INVISIBLE);
@@ -92,7 +93,7 @@ public class EditUserActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -122,7 +123,7 @@ public class EditUserActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.add_lecture) {
@@ -139,17 +140,13 @@ public class EditUserActivity extends AppCompatActivity
         }
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private boolean emptyValidation() {
-        if (TextUtils.isEmpty(studNumber.getText().toString()) || TextUtils.isEmpty(password.getText().toString())) {
-            return true;
-        } else {
-            return false;
-        }
+        return TextUtils.isEmpty(studNumber.getText().toString()) || TextUtils.isEmpty(password.getText().toString());
     }
 
     private void goHome() {

@@ -67,7 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public User updateUser(User user, int id) {
+    public void updateUser(User user, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Log.d("id in helper", String.valueOf(id));
@@ -80,7 +80,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("userinhelper", String.valueOf(cv));
         Log.d("idinhelper", String.valueOf(id));
         db.update(DatabaseOptions.USERS_TABLE, cv, DatabaseOptions.UserId + " = " + id, null);
-        return user;
     }
 
     public Lecture getLectures(int lecture_id) {
@@ -187,24 +186,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         }
         return isLecturer;
-    }
-
-    public ArrayList<String> getUsers() {
-        ArrayList<String> users = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor userCursor = db.rawQuery("select * from " + DatabaseOptions.USERS_TABLE, null);
-
-        if (userCursor != null && userCursor.moveToFirst())
-            do {
-                users.add(userCursor.getString(userCursor.getColumnIndex(DatabaseOptions.UserId)));
-                users.add(userCursor.getString(userCursor.getColumnIndex(DatabaseOptions.studNumber)));
-                users.add(userCursor.getString(userCursor.getColumnIndex(DatabaseOptions.password)));
-
-            } while (userCursor.moveToNext());
-        return users;
-
-
     }
 
 

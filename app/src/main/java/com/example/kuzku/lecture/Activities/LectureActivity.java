@@ -1,7 +1,9 @@
 package com.example.kuzku.lecture.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,7 +19,8 @@ import com.example.kuzku.lecture.Models.Lecture;
 import com.example.kuzku.lecture.Models.Lecturer;
 import com.example.kuzku.lecture.R;
 
-public class LectureActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class LectureActivity extends AppCompatActivity implements
+          NavigationView.OnNavigationItemSelectedListener {
 
     TextView nameLecture;
     TextView contentLecture;
@@ -33,7 +36,9 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
         savedInstanceState = getIntent().getExtras();
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
-        lecture = databaseHelper.getLectures(savedInstanceState.getInt("id"));
+        if (savedInstanceState != null) {
+            lecture = databaseHelper.getLectures(savedInstanceState.getInt("id"));
+        }
         final Intent intent = getIntent();
         isLecturer = intent.getIntExtra("isLecturer", isLecturer);
         setContentView(R.layout.activity_lecture);
@@ -53,6 +58,7 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onResume() {
         super.onResume();
@@ -101,7 +107,7 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.add_lecture) {

@@ -1,5 +1,6 @@
 package com.example.kuzku.lecture.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,8 +19,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private EditText editStudNumber;
     private EditText editPassword;
-    private CheckBox isLecturerCheck;
-    private FloatingActionButton registrationButton;
     private DatabaseHelper dbHelper;
     int isLecturer;
 
@@ -34,8 +33,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
         editStudNumber = findViewById(R.id.stud_number_input);
         editPassword = findViewById(R.id.password_input);
-        isLecturerCheck = findViewById(R.id.is_Lecturer);
-        registrationButton = findViewById(R.id.registration_button);
+        CheckBox isLecturerCheck = findViewById(R.id.is_Lecturer);
+        FloatingActionButton registrationButton = findViewById(R.id.registration_button);
 
 
         if (isLecturer == 1)
@@ -44,15 +43,16 @@ public class RegistrationActivity extends AppCompatActivity {
             isLecturerCheck.setVisibility(View.INVISIBLE);
         dbHelper = new DatabaseHelper(this);
         registrationButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ShowToast")
             @Override
             public void onClick(View v) {
-                if (!emptyValidation()) {
+                if (emptyValidation()) {
                     dbHelper.addUser(new User(editStudNumber.getText().toString(), editPassword.getText().toString(), false));
                     Toast.makeText(RegistrationActivity.this, "Added User", Toast.LENGTH_SHORT).show();
                     editPassword.setText("");
                     editStudNumber.setText("");
                     goHome();
-                } else if (!emptyValidation()) {
+                } else if (emptyValidation()) {
                     Toast.makeText(RegistrationActivity.this, "Empty fields", Toast.LENGTH_SHORT);
                 } else {
                     Toast.makeText(RegistrationActivity.this, "Error", Toast.LENGTH_SHORT);
@@ -71,11 +71,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private boolean emptyValidation() {
-        if (TextUtils.isEmpty(editStudNumber.getText().toString()) || TextUtils.isEmpty(editPassword.getText().toString())) {
-            return true;
-        } else {
-            return false;
-        }
+        return !TextUtils.isEmpty(editStudNumber.getText().toString()) && !TextUtils.isEmpty(editPassword.getText().toString());
     }
 
 }

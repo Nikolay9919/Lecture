@@ -68,10 +68,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private boolean emptyValidation() {
-        if (TextUtils.isEmpty(editStudNumber.getText().toString()) || TextUtils.isEmpty(editPassword.getText().toString())) {
-            return true;
-        } else {
-            return false;
-        }
+        return TextUtils.isEmpty(editStudNumber.getText().toString()) || TextUtils.isEmpty(editPassword.getText().toString());
     }
 }

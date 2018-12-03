@@ -3,6 +3,7 @@ package com.example.kuzku.lecture.Activities;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -24,7 +25,8 @@ import com.example.kuzku.lecture.Database.DatabaseHelper;
 import com.example.kuzku.lecture.Models.Lecture;
 import com.example.kuzku.lecture.R;
 
-public class AddLectureActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class AddLectureActivity extends AppCompatActivity implements
+          NavigationView.OnNavigationItemSelectedListener {
     EditText nameBox;
     EditText contentBox;
     String name;
@@ -50,11 +52,11 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, databaseHelper.getAllLecturers());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner = (Spinner) findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinner);
         spinner.setAdapter(adapter);
         spinner.setPrompt("Lecturers");
-        nameBox = (EditText) findViewById(R.id.lectureNameInput);
-        contentBox = (EditText) findViewById(R.id.contentInput);
+        nameBox = findViewById(R.id.lectureNameInput);
+        contentBox = findViewById(R.id.contentInput);
 
         name = nameBox.getText().toString();
         content = contentBox.getText().toString();
@@ -66,7 +68,7 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
             nameBox.setText(lecture.getName());
             contentBox.setText(lecture.getContent());
         }
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -80,7 +82,7 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
 
             }
         });
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,13 +115,13 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                   this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
@@ -136,16 +138,12 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
     }
 
     private boolean emptyValidation() {
-        if (TextUtils.isEmpty(nameBox.getText().toString()) || TextUtils.isEmpty(contentBox.getText().toString())) {
-            return true;
-        } else {
-            return false;
-        }
+        return TextUtils.isEmpty(nameBox.getText().toString()) || TextUtils.isEmpty(contentBox.getText().toString());
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -172,7 +170,7 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
 
@@ -189,7 +187,7 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
             startActivity(intent);
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
