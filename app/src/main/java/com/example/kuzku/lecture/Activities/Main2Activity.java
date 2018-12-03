@@ -59,6 +59,18 @@ public class Main2Activity extends AppCompatActivity
             }
         });
 
+        if (isLecturer == 1) {
+            lectureList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    int lectureId = position + 1;
+                    Intent intent1 = new Intent(Main2Activity.this, AddLectureActivity.class);
+                    intent1.putExtra("lectureId", lectureId);
+                    startActivity(intent1);
+                    return true;
+                }
+            });
+        }
         databaseHelper = new DatabaseHelper(getApplicationContext());
     }
 
@@ -67,7 +79,7 @@ public class Main2Activity extends AppCompatActivity
         super.onResume();
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, databaseHelper.getLectures());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, databaseHelper.getLecturesNames());
         Log.d("lectures", databaseHelper.getAllLectures().toString());
         Log.d("leturers", databaseHelper.getAllLecturers().toString());
         lectureList.setAdapter(adapter);
@@ -102,7 +114,8 @@ public class Main2Activity extends AppCompatActivity
 
 
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
 
 

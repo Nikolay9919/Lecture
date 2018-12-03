@@ -31,6 +31,7 @@ public class EditUserActivity extends AppCompatActivity
     CheckBox checkBox;
     FloatingActionButton fab;
     User user;
+    int isLecturer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class EditUserActivity extends AppCompatActivity
 
 
         final Intent intent = getIntent();
+        isLecturer = intent.getIntExtra("isLecturer", isLecturer);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                   this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -54,7 +56,7 @@ public class EditUserActivity extends AppCompatActivity
         password = (EditText) findViewById(R.id.edit_password);
         checkBox = (CheckBox) findViewById(R.id.is_Lecturer);
         databaseHelper = new DatabaseHelper(getApplicationContext());
-        if (intent.getIntExtra("isLecturer", 0) == 0) {
+        if (isLecturer == 0) {
             checkBox.setVisibility(View.INVISIBLE);
         }
 
@@ -111,7 +113,8 @@ public class EditUserActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -129,6 +132,10 @@ public class EditUserActivity extends AppCompatActivity
             Intent intent = new Intent(this, AddLecturerActivity.class);
             startActivity(intent);
 
+        } else if (id == R.id.registration_button) {
+            Intent intent = new Intent(this, RegistrationActivity.class);
+            intent.putExtra("isLecturer", isLecturer);
+            startActivity(intent);
         }
 
 

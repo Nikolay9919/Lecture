@@ -8,7 +8,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -20,9 +19,13 @@ import com.example.kuzku.lecture.R;
 
 public class LectureActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView contentLectureView;
+    TextView nameLecture;
+    TextView contentLecture;
+    TextView nameLecturer;
     Lecture lecture;
     DatabaseHelper databaseHelper;
+
+    int isLecturer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,8 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
         lecture = databaseHelper.getLectures(savedInstanceState.getInt("id"));
-
+        final Intent intent = getIntent();
+        isLecturer = intent.getIntExtra("isLecturer", isLecturer);
         setContentView(R.layout.activity_lecture);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(lecture.getName());
@@ -56,10 +60,13 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
         Lecturer lecturer = databaseHelper.getLecturer(lecture.getLecturerId());
 
 
-        contentLectureView = (TextView) findViewById(R.id.content_lecture);
-        contentLectureView.setMovementMethod(new ScrollingMovementMethod());
-        contentLectureView.setText(lecture.getName() + " \n " + lecturer.getFName() + " " + lecturer.getLName()
-                  + " \n " + lecture.getContent());
+        nameLecture = (TextView) findViewById(R.id.name_lecture);
+        nameLecturer = (TextView) findViewById(R.id.name_lecturer);
+        contentLecture = (TextView) findViewById(R.id.content_lecture);
+
+        contentLecture.setText(lecture.getContent());
+        nameLecturer.setText(lecturer.getFName() + " " + lecturer.getLName());
+        nameLecture.setText(lecture.getName());
 
     }
 
@@ -84,7 +91,8 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
 
 
@@ -105,6 +113,10 @@ public class LectureActivity extends AppCompatActivity implements NavigationView
 
         } else if (id == R.id.update_user) {
             Intent intent = new Intent(this, EditUserActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.registration_button) {
+            Intent intent = new Intent(this, RegistrationActivity.class);
+            intent.putExtra("isLecturer", isLecturer);
             startActivity(intent);
         }
 

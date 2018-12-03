@@ -30,17 +30,24 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
     String name;
     String content;
     int lecturerId;
+    int lectureIdUpdate;
+    int lectureId;
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
     Spinner spinner;
     ArrayAdapter<String> adapter;
+    int isLecturer;
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_add_lecture);
-
+        final Intent intent = getIntent();
         databaseHelper = new DatabaseHelper(getApplicationContext());
+        isLecturer = intent.getIntExtra("isLecturer", isLecturer);
+        lectureIdUpdate = intent.getIntExtra("lectureId", lectureId);
+
+
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, databaseHelper.getAllLecturers());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner = (Spinner) findViewById(R.id.spinner);
@@ -53,6 +60,12 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
         content = contentBox.getText().toString();
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getWritableDatabase();
+        if (lectureIdUpdate != 0) {
+            Lecture lecture;
+            lecture = databaseHelper.getLectures(lectureIdUpdate);
+            nameBox.setText(lecture.getName());
+            contentBox.setText(lecture.getContent());
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -71,23 +84,32 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (!emptyValidation()) {
-                    Lecture lecture = new Lecture();
+                Lecture lecture = new Lecture();
+                if (lectureIdUpdate != 0) {
+                    lecture.setId(lectureIdUpdate);
                     lecture.setName(nameBox.getText().toString());
                     lecture.setContent(contentBox.getText().toString());
                     lecture.setLecturerId(lecturerId);
-
-                    databaseHelper.addLecture(lecture);
-                    Snackbar.make(view, "Added", Snackbar.LENGTH_LONG)
-                              .setAction("Action", null).show();
+                    databaseHelper.updateLecture(lecture);
                     goHome();
                 } else {
-                    Snackbar.make(view, "Empty Fields", Snackbar.LENGTH_LONG)
-                              .setAction("Action", null).show();
+                    if (!emptyValidation()) {
+
+                        lecture.setName(nameBox.getText().toString());
+                        lecture.setContent(contentBox.getText().toString());
+                        lecture.setLecturerId(lecturerId);
+
+                        databaseHelper.addLecture(lecture);
+                        Snackbar.make(view, "Added", Snackbar.LENGTH_LONG)
+                                  .setAction("Action", null).show();
+                        goHome();
+                    } else {
+                        Snackbar.make(view, "Empty Fields", Snackbar.LENGTH_LONG)
+                                  .setAction("Action", null).show();
+                    }
+
+
                 }
-
-
             }
         });
 
@@ -142,7 +164,8 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -160,6 +183,10 @@ public class AddLectureActivity extends AppCompatActivity implements NavigationV
             Intent intent = new Intent(this, AddLecturerActivity.class);
             startActivity(intent);
 
+        } else if (id == R.id.registration_button) {
+            Intent intent = new Intent(this, RegistrationActivity.class);
+            intent.putExtra("isLecturer", isLecturer);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

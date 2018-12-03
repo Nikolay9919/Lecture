@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public ArrayList<String> getLectures() {
+    public ArrayList<String> getLecturesNames() {
         ArrayList<String> lectures = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -139,8 +139,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursorLectures != null && cursorLectures.moveToFirst())
             do {
 
-                lectures.add(cursorLectures.getString(cursorLectures.getColumnIndex(DatabaseOptions.LectureName)) + "        "
-                          + getLecturerName(cursorLectures.getInt(cursorLectures.getColumnIndex(DatabaseOptions.LecturerID)) + 1));
+                lectures.add(cursorLectures.getString(cursorLectures.getColumnIndex(DatabaseOptions.LectureName)) + "     "
+                          + getLecturerName(cursorLectures.getInt(cursorLectures.getColumnIndex(DatabaseOptions.LecturerID))));
 
 
             } while (cursorLectures.moveToNext());
@@ -290,5 +290,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         }
         return name;
+    }
+
+    public void updateLecture(Lecture lecture) {
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseOptions.LectureName, lecture.getName());
+        values.put(DatabaseOptions.LectureContent, lecture.getContent());
+        values.put(DatabaseOptions.LecturerID, lecture.getLecturerId());
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.update(DatabaseOptions.LECTURES_TABLE, values, DatabaseOptions.LectureId + " = " + String.valueOf(lecture.getId()), null);
     }
 }

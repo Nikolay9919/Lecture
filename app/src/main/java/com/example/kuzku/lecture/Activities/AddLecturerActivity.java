@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.example.kuzku.lecture.Database.DatabaseHelper;
 import com.example.kuzku.lecture.Models.Lecturer;
@@ -28,8 +27,9 @@ public class AddLecturerActivity extends AppCompatActivity implements Navigation
 
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
-    Spinner spinner;
+
     int lecturerId;
+    int isLecturer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,8 @@ public class AddLecturerActivity extends AppCompatActivity implements Navigation
 
         fNameBox = (EditText) findViewById(R.id.lecturerFNameInput);
         lNameBox = (EditText) findViewById(R.id.lecturerLNameInput);
-
+        final Intent intent = getIntent();
+        isLecturer = intent.getIntExtra("isLecturer", isLecturer);
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getWritableDatabase();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -85,6 +86,7 @@ public class AddLecturerActivity extends AppCompatActivity implements Navigation
 
         Intent intent = new Intent(this, Main2Activity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
         startActivity(intent);
     }
 
@@ -117,7 +119,8 @@ public class AddLecturerActivity extends AppCompatActivity implements Navigation
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -132,6 +135,10 @@ public class AddLecturerActivity extends AppCompatActivity implements Navigation
             startActivity(intent);
         } else if (id == R.id.update_user) {
             Intent intent = new Intent(this, EditUserActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.registration_button) {
+            Intent intent = new Intent(this, RegistrationActivity.class);
+            intent.putExtra("isLecturer", isLecturer);
             startActivity(intent);
         }
 
